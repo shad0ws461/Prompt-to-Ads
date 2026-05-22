@@ -2,6 +2,7 @@ services:
   - type: web_service
     name: google-ads-backend
     env: python
+    runtime: python-3.11
     plan: starter
     region: oregon
     buildCommand: cd backend && pip install -r requirements.txt
