@@ -1,0 +1,22 @@
+services:
+  - type: web_service
+    name: google-ads-backend
+    env: python
+    plan: starter
+    region: oregon
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: cd backend && python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT}
+    envVars:
+      - key: GOOGLE_REDIRECT_URI
+        value: https://google-ads-backend.onrender.com/api/oauth/callback
+
+  - type: static_site
+    name: google-ads-frontend
+    env: node
+    plan: starter
+    region: oregon
+    buildCommand: cd frontend && npm install && npm run build
+    publishPath: frontend/dist
+    envVars:
+      - key: VITE_API_BASE
+        value: https://google-ads-backend.onrender.com
